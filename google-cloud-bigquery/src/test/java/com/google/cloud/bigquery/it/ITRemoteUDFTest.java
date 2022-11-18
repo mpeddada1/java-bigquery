@@ -63,16 +63,16 @@ public class ITRemoteUDFTest {
     client = ConnectionServiceClient.create();
 
     DatasetInfo info =
-        DatasetInfo.newBuilder(ROUTINE_DATASET).setDescription("java routine lifecycle").build();
+            DatasetInfo.newBuilder(ROUTINE_DATASET).setDescription("java routine lifecycle").build();
     bigquery.create(info);
     CloudResourceProperties cloudResourceProperties = CloudResourceProperties.newBuilder().build();
     CreateConnectionRequest request =
-        CreateConnectionRequest.newBuilder()
-            .setParent(PARENT)
-            .setConnection(
-                Connection.newBuilder().setCloudResource(cloudResourceProperties).build())
-            .setConnectionId(CONNECTION_ID)
-            .build();
+            CreateConnectionRequest.newBuilder()
+                    .setParent(PARENT)
+                    .setConnection(
+                            Connection.newBuilder().setCloudResource(cloudResourceProperties).build())
+                    .setConnectionId(CONNECTION_ID)
+                    .build();
     connection = client.createConnection(request);
   }
 
@@ -83,7 +83,7 @@ public class ITRemoteUDFTest {
     }
     // delete a connection
     DeleteConnectionRequest request =
-        DeleteConnectionRequest.newBuilder().setName(connection.getName()).build();
+            DeleteConnectionRequest.newBuilder().setName(connection.getName()).build();
     client.deleteConnection(request);
     client.close();
   }
