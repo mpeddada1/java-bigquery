@@ -58,72 +58,72 @@ public class ITRemoteUDFTest {
 
   @Before
   public void setUp() throws IOException {
-//    RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
-//    bigquery = bigqueryHelper.getOptions().getService();
-//    client = ConnectionServiceClient.create();
-//
-//    DatasetInfo info =
-//            DatasetInfo.newBuilder(ROUTINE_DATASET).setDescription("java routine lifecycle").build();
-//    bigquery.create(info);
-//    CloudResourceProperties cloudResourceProperties = CloudResourceProperties.newBuilder().build();
-//    CreateConnectionRequest request =
-//            CreateConnectionRequest.newBuilder()
-//                    .setParent(PARENT)
-//                    .setConnection(
-//                            Connection.newBuilder().setCloudResource(cloudResourceProperties).build())
-//                    .setConnectionId(CONNECTION_ID)
-//                    .build();
-//    connection = client.createConnection(request);
+    RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
+    bigquery = bigqueryHelper.getOptions().getService();
+    client = ConnectionServiceClient.create();
+
+    DatasetInfo info =
+            DatasetInfo.newBuilder(ROUTINE_DATASET).setDescription("java routine lifecycle").build();
+    bigquery.create(info);
+    CloudResourceProperties cloudResourceProperties = CloudResourceProperties.newBuilder().build();
+    CreateConnectionRequest request =
+            CreateConnectionRequest.newBuilder()
+                    .setParent(PARENT)
+                    .setConnection(
+                            Connection.newBuilder().setCloudResource(cloudResourceProperties).build())
+                    .setConnectionId(CONNECTION_ID)
+                    .build();
+    connection = client.createConnection(request);
   }
 
   @AfterClass
   public static void afterClass() {
-//    if (bigquery != null) {
-//      RemoteBigQueryHelper.forceDelete(bigquery, ROUTINE_DATASET);
-//    }
-//    // delete a connection
-//    DeleteConnectionRequest request =
-//            DeleteConnectionRequest.newBuilder().setName(connection.getName()).build();
-//    client.deleteConnection(request);
-//    client.close();
+    if (bigquery != null) {
+      RemoteBigQueryHelper.forceDelete(bigquery, ROUTINE_DATASET);
+    }
+    // delete a connection
+    DeleteConnectionRequest request =
+            DeleteConnectionRequest.newBuilder().setName(connection.getName()).build();
+    client.deleteConnection(request);
+    client.close();
   }
 
   @Test
   public void testRoutineRemoteUDF() {
-//    String routineName = RemoteBigQueryHelper.generateRoutineName();
-//    RoutineId routineId = RoutineId.of(ROUTINE_DATASET, routineName);
-//    Map<String, String> userDefinedContext =
-//        new HashMap<String, String>() {
-//          {
-//            put("key1", "value1");
-//            put("key2", "value2");
-//          }
-//        };
-//
-//    RemoteFunctionOptions remoteFunctionOptions =
-//        RemoteFunctionOptions.newBuilder()
-//            .setEndpoint(REMOTE_ENDPOINT)
-//            .setConnection(connection.getName())
-//            .setMaxBatchingRows(Long.valueOf(30))
-//            .setUserDefinedContext(userDefinedContext)
-//            .build();
-//    RoutineInfo routineInfo =
-//        RoutineInfo.newBuilder(routineId)
-//            .setRoutineType("SCALAR_FUNCTION")
-//            .setArguments(
-//                ImmutableList.of(
-//                    RoutineArgument.newBuilder()
-//                        .setName("x")
-//                        .setDataType(StandardSQLDataType.newBuilder("INT64").build())
-//                        .build()))
-//            .setRemoteFunctionOptions(remoteFunctionOptions)
-//            .setReturnType(StandardSQLDataType.newBuilder("INT64").build())
-//            .build();
-//
-//    Routine routine = bigquery.create(routineInfo);
-//    assertNotNull(routine);
-//    assertEquals(routine.getRoutineType(), "SCALAR_FUNCTION");
-//    assertEquals(REMOTE_ENDPOINT, routine.getRemoteFunctionOptions().getEndpoint());
-//    assertEquals(connection.getName(), routine.getRemoteFunctionOptions().getConnection());
+    String routineName = RemoteBigQueryHelper.generateRoutineName();
+    RoutineId routineId = RoutineId.of(ROUTINE_DATASET, routineName);
+    Map<String, String> userDefinedContext =
+        new HashMap<String, String>() {
+          {
+            put("key1", "value1");
+            put("key2", "value2");
+          }
+        };
+
+    RemoteFunctionOptions remoteFunctionOptions =
+        RemoteFunctionOptions.newBuilder()
+            .setEndpoint(REMOTE_ENDPOINT)
+            .setConnection(connection.getName())
+            .setMaxBatchingRows(Long.valueOf(30))
+            .setUserDefinedContext(userDefinedContext)
+            .build();
+    RoutineInfo routineInfo =
+        RoutineInfo.newBuilder(routineId)
+            .setRoutineType("SCALAR_FUNCTION")
+            .setArguments(
+                ImmutableList.of(
+                    RoutineArgument.newBuilder()
+                        .setName("x")
+                        .setDataType(StandardSQLDataType.newBuilder("INT64").build())
+                        .build()))
+            .setRemoteFunctionOptions(remoteFunctionOptions)
+            .setReturnType(StandardSQLDataType.newBuilder("INT64").build())
+            .build();
+
+    Routine routine = bigquery.create(routineInfo);
+    assertNotNull(routine);
+    assertEquals(routine.getRoutineType(), "SCALAR_FUNCTION");
+    assertEquals(REMOTE_ENDPOINT, routine.getRemoteFunctionOptions().getEndpoint());
+    assertEquals(connection.getName(), routine.getRemoteFunctionOptions().getConnection());
   }
 }

@@ -843,17 +843,17 @@ public class ITBigQueryTest {
 
   @Test
   public void testDatasetUpdateAccess() throws IOException {
-//    Dataset dataset = bigquery.getDataset(DATASET);
-//    ServiceAccountCredentials credentials =
-//        (ServiceAccountCredentials) GoogleCredentials.getApplicationDefault();
-//    List<Acl> acl =
-//        ImmutableList.of(
-//            Acl.of(new Acl.Group("projectOwners"), Acl.Role.OWNER),
-//            Acl.of(new Acl.User(credentials.getClientEmail()), Acl.Role.OWNER),
-//            Acl.of(new Acl.IamMember("allUsers"), Acl.Role.READER));
-//    Dataset remoteDataset = dataset.toBuilder().setAcl(acl).build().update();
-//    assertNotNull(remoteDataset);
-//    assertEquals(3, remoteDataset.getAcl().size());
+    Dataset dataset = bigquery.getDataset(DATASET);
+    ServiceAccountCredentials credentials =
+        (ServiceAccountCredentials) GoogleCredentials.getApplicationDefault();
+    List<Acl> acl =
+        ImmutableList.of(
+            Acl.of(new Acl.Group("projectOwners"), Acl.Role.OWNER),
+            Acl.of(new Acl.User(credentials.getClientEmail()), Acl.Role.OWNER),
+            Acl.of(new Acl.IamMember("allUsers"), Acl.Role.READER));
+    Dataset remoteDataset = dataset.toBuilder().setAcl(acl).build().update();
+    assertNotNull(remoteDataset);
+    assertEquals(3, remoteDataset.getAcl().size());
   }
 
   @Test
@@ -1454,24 +1454,24 @@ public class ITBigQueryTest {
 
   @Test
   public void testSetPermExternalTableSchema() {
-//    String tableName = "test_create_external_table_perm";
-//    TableId tableId = TableId.of(DATASET, tableName);
-//    ExternalTableDefinition externalTableDefinition =
-//        ExternalTableDefinition.newBuilder(
-//                "gs://" + BUCKET + "/" + JSON_LOAD_FILE, FormatOptions.json())
-//            .setSchema(TABLE_SCHEMA)
-//            .setConnectionId(
-//                "projects/java-docs-samples-testing/locations/us/connections/DEVREL_TEST_CONNECTION")
-//            .build();
-//    TableInfo tableInfo = TableInfo.of(tableId, externalTableDefinition);
-//    Table createdTable = bigquery.create(tableInfo);
-//
-//    assertNotNull(createdTable);
-//    assertEquals(DATASET, createdTable.getTableId().getDataset());
-//    assertEquals(tableName, createdTable.getTableId().getTable());
-//    Table remoteTable = bigquery.getTable(DATASET, tableName);
-//    assertNotNull(remoteTable);
-//    assertTrue(remoteTable.delete());
+    String tableName = "test_create_external_table_perm";
+    TableId tableId = TableId.of(DATASET, tableName);
+    ExternalTableDefinition externalTableDefinition =
+        ExternalTableDefinition.newBuilder(
+                "gs://" + BUCKET + "/" + JSON_LOAD_FILE, FormatOptions.json())
+            .setSchema(TABLE_SCHEMA)
+            .setConnectionId(
+                "projects/java-docs-samples-testing/locations/us/connections/DEVREL_TEST_CONNECTION")
+            .build();
+    TableInfo tableInfo = TableInfo.of(tableId, externalTableDefinition);
+    Table createdTable = bigquery.create(tableInfo);
+
+    assertNotNull(createdTable);
+    assertEquals(DATASET, createdTable.getTableId().getDataset());
+    assertEquals(tableName, createdTable.getTableId().getTable());
+    Table remoteTable = bigquery.getTable(DATASET, tableName);
+    assertNotNull(remoteTable);
+    assertTrue(remoteTable.delete());
   }
 
   @Test
@@ -2314,43 +2314,43 @@ public class ITBigQueryTest {
 
   @Test
   public void testAuthorizeDataset() {
-//    String datasetName = RemoteBigQueryHelper.generateDatasetName();
-//    DatasetId datasetId = DatasetId.of(PROJECT_ID, datasetName);
-//    List<String> targetTypes = ImmutableList.of("VIEWS");
-//    // Specify the acl which will be shared to the authorized dataset
-//    List<Acl> acl =
-//        ImmutableList.of(
-//            Acl.of(new Acl.Group("projectOwners"), Acl.Role.OWNER),
-//            Acl.of(new Acl.IamMember("allUsers"), Acl.Role.READER));
-//    DatasetInfo datasetInfo =
-//        DatasetInfo.newBuilder(datasetId).setAcl(acl).setDescription("shared Dataset").build();
-//    Dataset sharedDataset = bigquery.create(datasetInfo);
-//    assertNotNull(sharedDataset);
-//    assertEquals(sharedDataset.getDescription(), "shared Dataset");
-//    // Get the current metadata for the dataset you want to share by calling the datasets.get method
-//    List<Acl> sharedDatasetAcl = new ArrayList<>(sharedDataset.getAcl());
-//
-//    // Create a new dataset to be authorized
-//    String authorizedDatasetName = RemoteBigQueryHelper.generateDatasetName();
-//    DatasetId authorizedDatasetId = DatasetId.of(PROJECT_ID, authorizedDatasetName);
-//    DatasetInfo authorizedDatasetInfo =
-//        DatasetInfo.newBuilder(authorizedDatasetId)
-//            .setDescription("new Dataset to be authorized by the sharedDataset")
-//            .build();
-//    Dataset authorizedDataset = bigquery.create(authorizedDatasetInfo);
-//    assertNotNull(authorizedDataset);
-//    assertEquals(
-//        authorizedDataset.getDescription(), "new Dataset to be authorized by the sharedDataset");
-//
-//    // Add the new DatasetAccessEntry object to the existing sharedDatasetAcl list
-//    DatasetAclEntity datasetEntity = new DatasetAclEntity(authorizedDatasetId, targetTypes);
-//    sharedDatasetAcl.add(Acl.of(datasetEntity));
-//
-//    // Update the dataset with the added authorization
-//    Dataset updatedDataset = sharedDataset.toBuilder().setAcl(sharedDatasetAcl).build().update();
-//
-//    // Verify that the authorized dataset has been added
-//    assertEquals(sharedDatasetAcl, updatedDataset.getAcl());
+    String datasetName = RemoteBigQueryHelper.generateDatasetName();
+    DatasetId datasetId = DatasetId.of(PROJECT_ID, datasetName);
+    List<String> targetTypes = ImmutableList.of("VIEWS");
+    // Specify the acl which will be shared to the authorized dataset
+    List<Acl> acl =
+        ImmutableList.of(
+            Acl.of(new Acl.Group("projectOwners"), Acl.Role.OWNER),
+            Acl.of(new Acl.IamMember("allUsers"), Acl.Role.READER));
+    DatasetInfo datasetInfo =
+        DatasetInfo.newBuilder(datasetId).setAcl(acl).setDescription("shared Dataset").build();
+    Dataset sharedDataset = bigquery.create(datasetInfo);
+    assertNotNull(sharedDataset);
+    assertEquals(sharedDataset.getDescription(), "shared Dataset");
+    // Get the current metadata for the dataset you want to share by calling the datasets.get method
+    List<Acl> sharedDatasetAcl = new ArrayList<>(sharedDataset.getAcl());
+
+    // Create a new dataset to be authorized
+    String authorizedDatasetName = RemoteBigQueryHelper.generateDatasetName();
+    DatasetId authorizedDatasetId = DatasetId.of(PROJECT_ID, authorizedDatasetName);
+    DatasetInfo authorizedDatasetInfo =
+        DatasetInfo.newBuilder(authorizedDatasetId)
+            .setDescription("new Dataset to be authorized by the sharedDataset")
+            .build();
+    Dataset authorizedDataset = bigquery.create(authorizedDatasetInfo);
+    assertNotNull(authorizedDataset);
+    assertEquals(
+        authorizedDataset.getDescription(), "new Dataset to be authorized by the sharedDataset");
+
+    // Add the new DatasetAccessEntry object to the existing sharedDatasetAcl list
+    DatasetAclEntity datasetEntity = new DatasetAclEntity(authorizedDatasetId, targetTypes);
+    sharedDatasetAcl.add(Acl.of(datasetEntity));
+
+    // Update the dataset with the added authorization
+    Dataset updatedDataset = sharedDataset.toBuilder().setAcl(sharedDatasetAcl).build().update();
+
+    // Verify that the authorized dataset has been added
+    assertEquals(sharedDatasetAcl, updatedDataset.getAcl());
   }
 
   /* TODO(prasmish): replicate the entire test case for executeSelect */
