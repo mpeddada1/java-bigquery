@@ -172,9 +172,12 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.threeten.bp.Duration;
 import org.threeten.extra.PeriodDuration;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class ITBigQueryTest {
 
+//  private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(ITBigQueryTest.class);
   private static final byte[] BYTES = {0xD, 0xE, 0xA, 0xD};
   private static final String BYTES_BASE64 = BaseEncoding.base64().encode(BYTES);
   private static final Long EXPIRATION_MS = 86400000L;
@@ -685,6 +688,7 @@ public class ITBigQueryTest {
 
   @BeforeClass
   public static void beforeClass() throws InterruptedException, IOException {
+//    LOGGER.info("Testing logging in PubSub integration tests");
     RemoteBigQueryHelper bigqueryHelper = RemoteBigQueryHelper.create();
     RemoteStorageHelper storageHelper = RemoteStorageHelper.create();
     Map<String, String> labels = ImmutableMap.of("test-job-name", "test-load-job");
